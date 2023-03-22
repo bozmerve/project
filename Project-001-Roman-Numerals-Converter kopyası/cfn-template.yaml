@@ -1,6 +1,6 @@
-AWSTemplateFormatVersion: 2010-09-09
+AWSTemplateFormatVersion: "2010-09-09"
 Description: |
-    CloudFormation Template for Roman Numerals Converter Application. This template creates Python Flask Web Application on Amazon Linux 2 (XXXXXXXXXXXXXXXXX) EC2 Instance with custom security group allowing http connections on port 80 and SSH connection on port 22. Roman Numerals Converter Application is downloaded from Github repository, then installed on Flask.
+    CloudFormation Template for Roman Numerals Converter Application. This template creates Python Flask Web Application on Amazon Linux 2 ami-02f3f602d23f1659d EC2 Instance with custom security group allowing http connections on port 80 and SSH connection on port 22. Roman Numerals Converter Application is downloaded from Github repository, then installed on Flask.
 Parameters:
   KeyName:
     Description: Enter the name of your keyname. Rianna says work! work! work!
@@ -33,19 +33,18 @@ Resources:
         - Key: Name
           Value: !Sub Web Server of ${AWS::StackName} Stack 
       UserData: !Base64 |
-#! /bin/bash
-yum update -y
-yum install python3 -y
-pip3 install flask
-yum install git -y
-cd /home/ec2-user
-FOLDER="https://raw.githubusercontent.com/serdarcw/project-repositmaster/Project-001-Roman-Numerals-Converter"
-wget ${FOLDER}/app.py
-mkdir templates && cd templates
-wget ${FOLDER}/templates/index.html
-wget ${FOLDER}/templates/result.html
-cd ..
-python3 app.py
+        #! /bin/bash
+        yum update -y
+        yum install python3 -y
+        pip3 install flask
+        yum install git -y
+        cd /home/ec2-user
+        wget https://raw.githubusercontent.com/bozmerve/project/main/Project-001-Roman-Numerals-Converter%20kopyas%C4%B1/app.py
+        mkdir templates && cd templates
+        wget https://raw.githubusercontent.com/bozmerve/project/main/Project-001-Roman-Numerals-Converter%20kopyas%C4%B1/template/index.html
+        wget https://raw.githubusercontent.com/bozmerve/project/main/Project-001-Roman-Numerals-Converter%20kopyas%C4%B1/template/result.html
+        cd ..
+        python3 app.py
 
 Outputs: 
   WebsiteURL:
@@ -53,12 +52,3 @@ Outputs:
       - http://${PublicAddress}
       - PublicAddress: !GetAtt WebServerHost.PublicDnsName
     Description: Roman Numerals Converter Application URL
-
-
-
-
-
-
-
-
-
